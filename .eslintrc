@@ -1,0 +1,35 @@
+{
+    "parser": "babel-eslint",
+    "extends": [
+        "standard",
+        "plugin:eslint-plugin/recommended"
+    ],
+    "plugins": [
+        "dependencies",
+        "eslint-plugin"
+    ],
+    "rules": {
+        // enable additional rules
+        "indent": [
+            "warn",
+            4
+        ],
+        "dependencies/case-sensitive": 1,
+        "dependencies/no-cycles": 1,
+        "dependencies/require-json-ext": 1,
+        "standard/no-callback-literal": 0
+    },
+    "parserOptions": {
+        "sourceType": "module",
+        "allowImportExportEverywhere": false,
+        "codeFrame": false
+    },
+    "env": {
+        "es6": true
+    },
+    "globals" : {
+        "DEVELOPMENT": false,
+        "PRODUCTION": false,
+        "ENVIRONMENT": false
+    }
+}

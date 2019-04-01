@@ -1,17 +1,17 @@
 import React from 'react'
-import {Close} from './icons'
+import { Close } from './icons'
 import Apps from './apps'
 import Dialog from './dialog'
 
 export default class ConsentModal extends React.Component {
-    render() {
-        const {isOpen, onHideRequest, onSaveRequest, config, manager, t, ns} = this.props
+    render () {
+        const { isOpen, onHideRequest, onSaveRequest, config, manager, t, ns } = this.props
 
         const isAlert = config.mustConsent && (!manager.confirmed || manager.changed)
 
         return <Dialog
             isOpen={isOpen}
-            aria={{'labelledby': 'orejime-modal-title'}}
+            aria={{ 'labelledby': 'orejime-modal-title' }}
             portalClassName={ns('ModalPortal')}
             overlayClassName={ns('ModalOverlay')}
             appElement={config.appElement}
@@ -42,15 +42,15 @@ export default class ConsentModal extends React.Component {
                                 <strong className={ns('Modal-changes')}>{t(['consentNotice', 'changeDescription'])}</strong>
                             </p>
                         }
-                        {t(['consentModal','description'])}&nbsp;
-                        {t(['consentModal','privacyPolicy','text'], {
-                            privacyPolicy : <a
+                        {t(['consentModal', 'description'])}&nbsp;
+                        {t(['consentModal', 'privacyPolicy', 'text'], {
+                            privacyPolicy: <a
                                 key="privacyPolicyLink"
                                 className={ns('Modal-privacyPolicyLink')}
-                                onClick={(e) => {onHideRequest()}}
+                                onClick={(e) => { onHideRequest() }}
                                 href={config.privacyPolicy}
                             >
-                                {t(['consentModal','privacyPolicy','name'])}
+                                {t(['consentModal', 'privacyPolicy', 'name'])}
                             </a>
                         })}
                     </p>
@@ -68,14 +68,6 @@ export default class ConsentModal extends React.Component {
                         >
                             {t(['save'])}
                         </button>
-                        <a
-                            target="_blank"
-                            className={ns('Modal-poweredByLink')}
-                            href={config.poweredBy || 'https://github.com/empreinte-digitale/orejime'}
-                            title={`${t(['poweredBy'])} (${t(['newWindow'])})`}
-                        >
-                            {t(['poweredBy'])}
-                        </a>
                     </div>
                 </form>
             </div>

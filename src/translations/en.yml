@@ -5,7 +5,7 @@ consentModal:
   privacyPolicy:
     name: privacy policy
     text: >
-      To learn more, please read our {privacyPolicy}.
+      To learn more, please read purposesour {privacyPolicy}.
 consentNotice:
   changeDescription: There were changes since your last visit, please update your consent.
   description: >

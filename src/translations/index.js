@@ -10,11 +10,11 @@ import ro from './ro.yml'
 import nb from './nb.yml'
 
 export default {
-  de,
-  en,
-  fr,
-  hu,
-  it,
-  ro,
-  nb,
+    de,
+    en,
+    fr,
+    hu,
+    it,
+    ro,
+    nb
 }

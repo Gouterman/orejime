@@ -1,14 +1,14 @@
 import React from 'react'
-import {render} from 'react-dom'
+import { render } from 'react-dom'
 import ConsentManager from './consent-manager'
 import translations from './translations'
 import Main from './components/main.js'
-import {convertToMap, update} from './utils/maps'
-import {t, language} from './utils/i18n'
-import {createCssNamespace} from './utils/css'
+import { convertToMap, update } from './utils/maps'
+import { t, language } from './utils/i18n'
+import { createCssNamespace } from './utils/css'
 
-function getElement(config) {
-    const {elementID: id, stylePrefix} = config
+function getElement (config) {
+    const { elementID: id, stylePrefix } = config
     var element = document.getElementById(id)
     if (element === null) {
         element = document.createElement('div')
@@ -24,7 +24,7 @@ function getElement(config) {
     return document.querySelector(`.${stylePrefix}-AppContainer`)
 }
 
-function getTranslations(config) {
+function getTranslations (config) {
     const trans = new Map([])
     update(trans, convertToMap(translations))
     update(trans, convertToMap(config.translations))
@@ -32,10 +32,9 @@ function getTranslations(config) {
 }
 
 const managers = {}
-function getManager(config) {
+function getManager (config) {
     const name = config.elementID
-    if (managers[name] === undefined)
-        managers[name] = new ConsentManager(config)
+    if (managers[name] === undefined) { managers[name] = new ConsentManager(config) }
     return managers[name]
 }
 
@@ -51,10 +50,10 @@ export const defaultConfig = {
     implicitConsent: false,
     lang: language(),
     translations: {},
-    apps: {},
+    apps: {}
 }
 
-export function init(conf) {
+export function init (conf) {
     const config = Object.assign({}, defaultConfig, conf)
     const errors = []
     if (!Object.keys(config.apps).length) {
@@ -71,7 +70,7 @@ export function init(conf) {
     const element = getElement(config)
     const trans = getTranslations(config)
     const manager = getManager(config)
-    const tt = (...args) => {return t(trans, config.lang, ...args)}
+    const tt = (...args) => { return t(trans, config.lang, ...args) }
     const app = render(
         <Main t={tt}
             ns={createCssNamespace(config.stylePrefix)}
@@ -90,10 +89,10 @@ export function init(conf) {
     }
 }
 
-function initDefaultInstance() {
-    if (window.orejimeConfig !== undefined
+function initDefaultInstance () {
+    if (window.orejimeConfig !== undefined &&
         // `window.orejime instanceof Element` means there is a #orejime div in the dom
-        && (window.orejime === undefined || window.orejime instanceof Element)
+        (window.orejime === undefined || window.orejime instanceof Element)
     ) {
         window.orejime = init(window.orejimeConfig)
     }
@@ -102,5 +101,5 @@ function initDefaultInstance() {
 if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', initDefaultInstance)
 } else {
-    initDefaultInstance();
+    initDefaultInstance()
 }

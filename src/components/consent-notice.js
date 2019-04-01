@@ -1,9 +1,9 @@
 import React from 'react'
-import {getPurposes} from '../utils/config'
+import { getPurposes } from '../utils/config'
 import ConsentModal from './consent-modal'
 
 export default class ConsentNotice extends React.Component {
-    render() {
+    render () {
         const {
             config,
             manager,
@@ -16,12 +16,12 @@ export default class ConsentNotice extends React.Component {
         } = this.props
 
         const purposes = getPurposes(config)
-        const purposesText = purposes.map((purpose) => t(['purposes', purpose])).join(", ")
+        const purposesText = purposes.map((purpose) => t(['purposes', purpose])).join(', ')
 
         return <div aria-hidden={isModalVisible} className={ns('Notice')}>
             <div className={ns('Notice-body')}>
                 <p className={ns('Notice-description')}>
-                    {t(['consentNotice', 'description'], {purposes: <strong key="purposes" className={ns('Notice-purposes')}>{purposesText}</strong>})}
+                    {t(['consentNotice', 'description'], { purposes: <strong key="purposes" className={ns('Notice-purposes')}>{purposesText}</strong> })}
                 </p>
 
                 {manager.changed &&
@@ -30,7 +30,7 @@ export default class ConsentNotice extends React.Component {
 
                 <ul className={ns('Notice-actions')}>
                     <li className={ns('Notice-actionItem')}>
-                         <button
+                        <button
                             className={ns('Button Button--save Notice-button Notice-saveButton')}
                             type="button"
                             onClick={onSaveRequest}
@@ -39,7 +39,7 @@ export default class ConsentNotice extends React.Component {
                         </button>
                     </li>
                     <li className={ns('Notice-actionItem')}>
-                         <button
+                        <button
                             className={ns('Button Button--decline Notice-button Notice-declineButton')}
                             type="button"
                             onClick={onDeclineRequest}
@@ -48,7 +48,7 @@ export default class ConsentNotice extends React.Component {
                         </button>
                     </li>
                     <li className={ns('Notice-actionItem')}>
-                         <button
+                        <button
                             type="button"
                             className={ns('Button Button--info Notice-learnMoreButton')}
                             onClick={onConfigRequest}

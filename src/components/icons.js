@@ -1,6 +1,6 @@
 import React from 'react'
 
-export const Close = ({t, ns}) => {
+export const Close = ({ t, ns }) => {
     return <svg
         role="img"
         className={ns('CloseIcon')}

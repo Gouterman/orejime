@@ -1,13 +1,11 @@
 import React from 'react'
-import ReactModal from 'react-modal'
-import useLegacyLifecycleMethods from '../utils/useLegacyLifecycleMethods';
+import useLegacyLifecycleMethods from '../utils/useLegacyLifecycleMethods'
+
+const ESC_KEY = 27
 
 export default class Dialog extends React.Component {
-    constructor(props) {
+    constructor (props) {
         super()
-        if (props.appElement) {
-            ReactModal.setAppElement(props.appElement)
-        }
         this.scrollPosition = null
 
         // handle lifecycle methods depending on react version for full support
@@ -16,10 +14,13 @@ export default class Dialog extends React.Component {
         } else {
             this.getSnapshotBeforeUpdate = this.getSnapshotBeforeUpdateLifecycle
         }
+
+        this.handleKeyDown = this.handleKeyDown.bind(this)
+        this.setContentRef = this.setContentRef.bind(this)
     }
 
     // for react <16.3 support - see constructor
-    componentWillUpdateLifecycle(nextProps) {
+    componentWillUpdateLifecycle (nextProps) {
         const willOpen = nextProps.isOpen
         if (willOpen && !this.props.isOpen) {
             this.scrollPosition = window.pageYOffset
@@ -27,44 +28,63 @@ export default class Dialog extends React.Component {
     }
 
     // for react >= 16.3 support - see constructor
-    getSnapshotBeforeUpdateLifecycle(prevProps) {
-        const {isOpen} = this.props
+    getSnapshotBeforeUpdateLifecycle (prevProps) {
+        const { isOpen } = this.props
         if (isOpen && !prevProps.isOpen) {
             this.scrollPosition = window.pageYOffset
         }
-        return null;
+        return null
     }
 
-    componentDidUpdate(prevProps) {
-        const {isOpen} = this.props
+    componentDidUpdate (prevProps, prevState) {
+        const { isOpen } = this.props
         if (!isOpen && prevProps.isOpen && this.props.handleScrollPosition && this.scrollPosition !== null) {
-            // the scroll position stuff is for iOS to work correctly when we want to prevent normal website
-            // scrolling with the modal opened
-            //
-            // /!\ this requires specific CSS to work, example if `htmlOpenClassName = modal-open`:
-            //
-            // .modal-open {
-            //   height: 100%;
-            // }
-            // .modal-open body {
-            //   position: fixed;
-            //   overflow: hidden;
-            //   height: 100%;
-            //   width: 100%;
-            // }
-            setTimeout(() => { //setTimeout because it seems there is a race condition of some sort without it… oh well
+            setTimeout(() => { // setTimeout because it seems there is a race condition of some sort without it… oh well
                 window.scrollTo(window.pageXOffset, this.scrollPosition)
                 this.scrollPosition = null
             }, 0)
         }
+
+        if (
+            this.props.isOpen &&
+            !prevState.isOpen
+        ) {
+            this.content.focus()
+        }
     }
 
-    render() {
-        const {children, appElement, handleScrollPosition, ...reactModalProps} = this.props
+    /**
+     * @param {KeyboardEvent} event
+     */
+    handleKeyDown (event) {
+        if (event.keyCode === ESC_KEY) {
+            event.stopPropagation()
+            this.props.onRequestClose(event)
+        }
+    }
 
-        return <ReactModal {...reactModalProps}>
-            {children}
-        </ReactModal>
+    setContentRef (content) {
+        this.content = content
+        this.props.contentRef && this.props.contentRef(content)
+    }
+
+    render () {
+        const { children, appElement, handleScrollPosition, ...reactModalProps } = this.props
+
+        if (!reactModalProps.isOpen) return
+
+        return <div className="orejime-ModalPortal"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="orejime-modal-title"
+            onKeyDown={this.handleKeyDown}
+            ref={this.setContentRef}>
+            <div className="ReactModal__Overlay ReactModal__Overlay--after-open orejime-ModalOverlay"
+                onClick={(event) => this.props.onRequestClose(event)}/>
+            <div className="ReactModal__Content ReactModal__Content--after-open orejime-ModalWrapper">
+                {children}
+            </div>
+        </div>
     }
 }
 

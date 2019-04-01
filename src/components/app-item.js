@@ -1,9 +1,8 @@
 import React from 'react'
 
 export default class AppItem extends React.Component {
-
-    render(){
-        const {checked, onToggle, name, title, description, t, ns} = this.props
+    render () {
+        const { checked, onToggle, name, title, description, t, ns } = this.props
         const required = this.props.required || false
         const optOut = this.props.optOut || false
         const purposes = this.props.purposes || []
@@ -12,7 +11,7 @@ export default class AppItem extends React.Component {
         }
         const id = `orejime-app-item-${name}`
         const isChecked = checked || required
-        const purposesText = purposes.map((purpose) => t(['purposes', purpose])).join(", ")
+        const purposesText = purposes.map((purpose) => t(['purposes', purpose])).join(', ')
         const optOutText = optOut
             ? <span
                 className={ns('AppItem-optOut')}
@@ -49,7 +48,7 @@ export default class AppItem extends React.Component {
             <label
                 htmlFor={id}
                 className={ns('AppItem-label')}
-                {...(required ? {tabIndex: "0"} : {})}
+                {...(required ? { tabIndex: '0' } : {})}
             >
                 <span className={ns('AppItem-title')}>{title}</span>{requiredText}{optOutText}
                 <span className={ns(`AppItem-switch ${required ? 'AppItem-switch--disabled' : ''}`)}>
@@ -63,5 +62,4 @@ export default class AppItem extends React.Component {
             </div>
         </div>
     }
-
 }

@@ -4,3 +4,4 @@ node_modules
 /dist/orejime.scss
 /es
 /lib
+/.idea

@@ -3,7 +3,7 @@ import ConsentNotice from './consent-notice'
 import ConsentModal from './consent-modal'
 
 export default class Main extends React.Component {
-    constructor(props) {
+    constructor (props) {
         super(props)
         this.state = {
             isModalVisible: this.isModalVisible()
@@ -14,8 +14,8 @@ export default class Main extends React.Component {
         this.declineAndHideAll = this.declineAndHideAll.bind(this)
     }
 
-    isModalVisible(userRequest) {
-        const {config, manager} = this.props
+    isModalVisible (userRequest) {
+        const { config, manager } = this.props
         if (userRequest) {
             return true
         }
@@ -25,8 +25,8 @@ export default class Main extends React.Component {
         return false
     }
 
-    isNoticeVisible() {
-        const {config, manager} = this.props
+    isNoticeVisible () {
+        const { config, manager } = this.props
         if (config.mustConsent || config.noNotice) {
             return false
         }
@@ -36,36 +36,36 @@ export default class Main extends React.Component {
         return true
     }
 
-    showModal(e) {
+    showModal (e) {
         if (e !== undefined) {
             e.preventDefault()
         }
-        this.setState({isModalVisible: this.isModalVisible(true)})
+        this.setState({ isModalVisible: this.isModalVisible(true) })
     }
 
-    hideModal(e) {
+    hideModal (e) {
         if (e !== undefined) {
             e.preventDefault()
         }
-        this.setState({isModalVisible: this.isModalVisible(false)})
+        this.setState({ isModalVisible: this.isModalVisible(false) })
     }
 
-    saveAndHideAll(e) {
+    saveAndHideAll (e) {
         if (e !== undefined) {
             e.preventDefault()
         }
         this.props.manager.saveAndApplyConsents()
-        this.setState({isModalVisible: this.isModalVisible(false)})
+        this.setState({ isModalVisible: this.isModalVisible(false) })
     }
 
-    declineAndHideAll(e) {
+    declineAndHideAll (e) {
         this.props.manager.declineAll()
         this.props.manager.saveAndApplyConsents()
-        this.setState({isModalVisible: this.isModalVisible(false)})
+        this.setState({ isModalVisible: this.isModalVisible(false) })
     }
 
-    render() {
-        const {config, t, manager, ns} = this.props
+    render () {
+        const { config, t, manager, ns } = this.props
         const isNoticeVisible = this.isNoticeVisible()
         return (
             <div className={ns('Main')}>
